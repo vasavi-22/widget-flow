@@ -1,7 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { loadState } from "./localStorage";
 
 // Initial state
-const initialState = {
+const initialState = loadState() || {
     categories: [
       {
         id: "1",
@@ -46,7 +47,7 @@ const dashboardSlice = createSlice({
             const { categoryId, widgetId } = action.payload;
             const category = state.categories.find(cat => cat.id === categoryId);
             if(category){
-                category.widgets = category.widgets.filter(widget => widget.id === widgetId);
+                category.widgets = category.widgets.filter(widget => widget.id !== widgetId);
             }
         },
         addCategory : (state, action) => {
