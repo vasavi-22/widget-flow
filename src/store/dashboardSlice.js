@@ -57,9 +57,16 @@ const dashboardSlice = createSlice({
         removeCategory : (state, action) => {
             const { categoryId } = action.payload;
             state.categories = state.categories.filter(category => category.id === categoryId);
+        },
+        removeWidgetsFromCategory: (state, action) => {
+          const { categoryId, widgetIds } = action.payload;
+          const category = state.categories.find(cat => cat.id === categoryId);
+          if (category) {
+            category.widgets = category.widgets.filter(widget => !widgetIds.includes(widget.id));
+          }
         }
     }
 });
 
-export const { addWidget, removeWidget, addCategory, removeCategory } = dashboardSlice.actions;
+export const { addWidget, removeWidget, addCategory, removeCategory, removeWidgetsFromCategory } = dashboardSlice.actions;
 export default dashboardSlice.reducer;
