@@ -1,0 +1,74 @@
+body{
+  background-color: #d4e2ef;  
+}
+
+.dashboard{
+    padding: 30px;
+}
+
+.category-div{
+    padding: 10px;
+}
+
+.widget-div{
+    display: flex;
+    gap: 10px;
+}
+
+.widget{
+    /* background-color: #f9f9f9;  */
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 15px;
+    display: flex;
+    flex-direction: column; 
+    justify-content: space-between; 
+    /* align-items: center;  */
+    /* text-align: center;  */
+}
+
+.widget h5{
+    padding-left : 20px;
+    margin-bottom: -35px;
+    font-size: 16px; 
+    word-wrap: break-word;
+    overflow: hidden;
+    text-overflow: ellipsis; 
+    max-width: 100%;
+}
+
+.chart{
+    padding: 30px;
+    margin: 0 auto;
+}
+
+/* .widget .chart-div{
+    width: 400px;
+    height: 200px;
+} */
+
+.widget .no-div{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    width: 300px;
+    height: 300px
+}
+
+.widget .no-div img{
+    margin-top: 100px;
+}
+
+.add-div{
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 15px;
+    display: flex;
+    flex-direction: column; 
+    justify-content: center; 
+    align-items: center;
+    width: 300px;
+}
