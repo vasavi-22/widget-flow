@@ -6,6 +6,26 @@ body{
     padding: 30px;
 }
 
+.top{
+    display: flex;
+    gap: 10px;
+}
+
+.top button{
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    color: gray
+}
+
+.search{
+    background-color: #d4e2ef;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 5px;
+    width: 300px;
+}
+
 .category-div{
     padding: 10px;
 }
@@ -13,6 +33,10 @@ body{
 .widget-div{
     display: flex;
     gap: 10px;
+}
+
+button{
+    cursor: pointer;
 }
 
 .widget{
@@ -71,4 +95,75 @@ body{
     justify-content: center; 
     align-items: center;
     width: 300px;
+}
+
+.add-div .add-btn{
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    color: gray
+}
+
+.add-widget{
+    background-color: white;
+}
+
+.dialog-header{
+    background-color: #0A1172;
+    color: whitesmoke;
+    padding: 5px;
+    padding-left: 15px;
+}
+
+.p-dialog-header-close{
+    background-color: #0A1172;
+    color: whitesmoke;
+    padding: 9px;
+}
+
+.add-widget form{
+    padding: 20px;
+    text-align: center;
+}
+
+.add-widget form input[type="text"]{
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 5px;
+    width: 80%;
+    margin-bottom: 10px;
+}
+
+.footer-div{
+    float: right;
+    padding: 8px;
+}
+
+.footer-div button{
+    margin-left: 5px;
+    padding: 5px 20px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.btn-cancel{
+    background-color: white;
+}
+
+.btn-confirm{
+    background-color: #0A1172;
+    color: whitesmoke;
+}
+
+.full-screen-dialog {
+    width: 35vw;
+    height: 100vh;
+    margin: 0;
+    max-height: 100vh;
+    overflow: auto;
+}
+
+.add-category-dialog{
+    background-color: white;
 }

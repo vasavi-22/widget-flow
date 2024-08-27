@@ -1,8 +1,11 @@
-import React, { useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { removeWidgetsFromCategory } from '../../store/dashboardSlice';
+import React, { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { removeWidgetsFromCategory } from "../../store/dashboardSlice";
+import { Dialog } from "primereact/dialog";
+import { Button } from "primereact/button";
+import "./Dashboard.css";
 
-const AddCategory = () => {
+const AddCategory = ({ isVisible, onClose }) => {
   const categories = useSelector((state) => state.dashboard.categories);
   const dispatch = useDispatch();
 
@@ -23,8 +26,8 @@ const AddCategory = () => {
       ...prevCheckedWidgets,
       [categoryId]: {
         ...prevCheckedWidgets[categoryId],
-        [widgetId]: !prevCheckedWidgets[categoryId][widgetId] // Toggle the checkbox state
-      }
+        [widgetId]: !prevCheckedWidgets[categoryId][widgetId], // Toggle the checkbox state
+      },
     }));
   };
 
@@ -38,34 +41,64 @@ const AddCategory = () => {
       );
 
       if (widgetIdsToRemove.length > 0) {
-        dispatch(removeWidgetsFromCategory({ categoryId, widgetIds: widgetIdsToRemove }));
+        dispatch(
+          removeWidgetsFromCategory({ categoryId, widgetIds: widgetIdsToRemove })
+        );
       }
     });
+
+    onClose(); // Close the dialog after submission
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      {categories.map((category) => (
-        <div key={category.id}>
-          <h3>{category.name}</h3>
-          <ul>
-            {category.widgets.map((widget) => (
-              <li key={widget.id}>
-                <label>
-                  <input
-                    type="checkbox"
-                    checked={checkedWidgets[category.id][widget.id]}
-                    onChange={() => handleCheckboxChange(category.id, widget.id)}
-                  />
-                  {widget.name}
-                </label>
-              </li>
-            ))}
-          </ul>
+    <Dialog
+      className="add-category-dialog full-screen-dialog"
+      header={<div className="dialog-header">Add/Remove Widgets from Categories</div>}
+      visible={isVisible}
+      style={{ width: "35vw", position: "absolute", right: "0" }}
+      onHide={onClose}
+      footer={
+        <div className="footer-div">
+          <Button
+            label="Cancel"
+            icon="pi pi-times"
+            onClick={onClose}
+            className="btn-cancel"
+          />
+          <Button
+            label="Update"
+            icon="pi pi-check"
+            onClick={handleSubmit}
+            className="btn-confirm"
+            autoFocus
+          />
         </div>
-      ))}
-      <button type="submit">Update Categories</button>
-    </form>
+      }
+    >
+      <form>
+        {categories.map((category) => (
+          <div key={category.id}>
+            <h3>{category.name}</h3>
+            <ul>
+              {category.widgets.map((widget) => (
+                <li key={widget.id}>
+                  <label>
+                    <input
+                      type="checkbox"
+                      checked={checkedWidgets[category.id][widget.id]}
+                      onChange={() =>
+                        handleCheckboxChange(category.id, widget.id)
+                      }
+                    />
+                    {widget.name}
+                  </label>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </form>
+    </Dialog>
   );
 };
 

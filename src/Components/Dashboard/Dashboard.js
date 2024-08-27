@@ -11,17 +11,16 @@ const Dashboard = () => {
   const [widgetName, setWidgetName] = useState("");
   const [widgetText, setWidgetText] = useState("");
   const [categoryId, setCategoryId] = useState("");
-  const [show, setShow] = useState(false);
+  const [showWidgetDialog, setShowWidgetDialog] = useState(false);
+  const [showCategoryDialog, setShowCategoryDialog] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
-
-  const [isAddCategoryVisible, setIsAddCategoryVisible] = useState(false);
 
   const categories = useSelector((state) => state.dashboard.categories);
   console.log(categories);
   const dispatch = useDispatch();
 
   const handleAddWidget = () => {
-    setShow(false);
+    setShowWidgetDialog(false);
     console.log(categoryId);
     console.log(widgetName);
     console.log(widgetText);
@@ -31,6 +30,8 @@ const Dashboard = () => {
       text: widgetText,
     };
     dispatch(addWidget({ categoryId, widget: newWidget }));
+    setWidgetName("");
+    setWidgetText("");
   };
 
   const handleRemoveWidget = (categoryId, widgetId) => {
@@ -39,27 +40,22 @@ const Dashboard = () => {
 
   // Toggle the visibility of the "Add Category" section
   const handleAddCategoryClick = () => {
-    setIsAddCategoryVisible((prev) => !prev);
+    setShowCategoryDialog(true);
   };
 
   return (
     <div className="dashboard">
       <h1>CNAPP Dashboard</h1>
-      <input
-        type="text"
-        placeholder="Search anything..."
-        value={searchTerm}
-        onChange={(e) => setSearchTerm(e.target.value)}
-      />
-      <button onClick={handleAddCategoryClick}>
-        {isAddCategoryVisible ? "Hide Add Category" : "Add Category"}
-      </button>
-      {isAddCategoryVisible && (
-        <div>
-          <h2>Add/Remove Widgets from Categories</h2>
-          <AddCategory />
-        </div>
-      )}
+      <div className="top">
+        <input
+          type="text"
+          className="search"
+          placeholder="&#128269; Search anything..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+        />
+        <button onClick={handleAddCategoryClick}>Add Category</button>
+      </div>
       {categories.map((cat) => (
         <div className="category-div" key={cat.id}>
           <h3>{cat.name}</h3>
@@ -72,6 +68,14 @@ const Dashboard = () => {
               )
               .map((widget) => (
                 <div className="widget" key={widget.id}>
+                  <img
+                    src="/assets/images/cross.png"
+                    alt=""
+                    width="20px"
+                    height="20px"
+                    onClick={() => handleRemoveWidget(cat.id, widget.id)}
+                    style={{ marginLeft: "auto" }}
+                  />
                   <h5>{widget.name}</h5>
                   {widget.data ? (
                     <div className="chart-div">
@@ -81,11 +85,6 @@ const Dashboard = () => {
                         title={widget.name}
                         colors={widget.colors}
                       />
-                      <button
-                        onClick={() => handleRemoveWidget(cat.id, widget.id)}
-                      >
-                        Remove
-                      </button>
                     </div>
                   ) : (
                     <div className="no-div">
@@ -107,34 +106,37 @@ const Dashboard = () => {
               ))}
             <div className="add-div">
               <button
+                className="add-btn"
                 onClick={() => {
                   setCategoryId(cat.id);
-                  setShow(true);
+                  setShowWidgetDialog(true);
                 }}
               >
                 + Add Widget
               </button>
               <Dialog
-                className="add-widget"
-                header="Add Widget"
-                visible={show}
-                style={{ width: "35vw", height: "35vw" }}
+                className="add-widget full-screen-dialog"
+                header={<div className="dialog-header">Add Widget</div>}
+                visible={showWidgetDialog}
+                style={{ width: "35vw", height: "100vh", marginLeft: "auto" }}
                 onHide={() => {
-                  setShow(false);
+                  setShowWidgetDialog(false);
                   setWidgetName("");
                   setWidgetText("");
                 }}
                 footer={
                   <div className="footer-div">
                     <Button
+                      className="btn-cancel"
                       label="Cancel"
                       onClick={() => {
-                        setShow(false);
+                        setShowWidgetDialog(false);
                         setWidgetName("");
                         setWidgetText("");
                       }}
                     />
                     <Button
+                      className="btn-confirm"
                       label="Confirm"
                       onClick={handleAddWidget}
                       autoFocus
@@ -160,6 +162,12 @@ const Dashboard = () => {
                   />
                 </form>
               </Dialog>
+
+              {/* Add Category Dialog */}
+              <AddCategory
+                isVisible={showCategoryDialog}
+                onClose={() => setShowCategoryDialog(false)}
+              />
             </div>
           </div>
         </div>
