@@ -167,3 +167,118 @@ button{
 .add-category-dialog{
     background-color: white;
 }
+  
+/* Tab Container and Buttons */
+.tab-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.tab-container p{
+    margin-left: 20px;
+    color: rgb(61, 60, 60);
+    font-family: Arial, Helvetica, sans-serif;
+}
+  
+.tab-buttons {
+    display: flex;
+    border-bottom: 2px solid #ddd; /* Horizontal line below the tabs */
+    margin-bottom: 10px;
+}
+  
+.tab-button {
+    padding: 10px 20px;
+    border: none;
+    background: none;
+    cursor: pointer;
+    font-size: 14px;
+    color: #777;
+    transition: color 0.3s, border-bottom 0.3s;
+    margin-right: 15px;
+    position: relative;
+}
+  
+.tab-button.active {
+    color: #0A1172;
+    font-weight: bold;
+    border-bottom: 3px solid #0A1172;
+}
+  
+.tab-button:hover {
+    color: #0A1172; /* Hover effect for tabs */
+}
+  
+.tab-content {
+    padding: 10px 0;
+}
+  
+.tab-content ul{
+    list-style-type: none;
+}
+
+.tab-content input[type="checkbox"] {
+    cursor: pointer;
+    background-color: white;
+    border: 1px solid #ddd;
+}
+
+.tab-content input:checked{
+    background-color: #0A1172;
+    border-color: #0A1172;
+}
+
+/* Custom Checkbox */
+.custom-checkbox {
+    display: flex;
+    align-items: center;
+    position: relative;
+    padding-left: 30px;
+    cursor: pointer;
+    font-size: 16px;
+}
+  
+.custom-checkbox input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+  
+.checkbox-mark {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    height: 20px;
+    width: 20px;
+    background-color: white;
+    border: 2px solid #ddd;
+    border-radius: 3px;
+    transition: background-color 0.3s, border-color 0.3s;
+}
+  
+.custom-checkbox input:checked ~ .checkbox-mark {
+    background-color: #0A1172;
+    border-color: #0A1172;
+}
+  
+.checkbox-mark:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+  
+.custom-checkbox input:checked ~ .checkbox-mark:after {
+    display: block;
+}
+  
+.custom-checkbox .checkbox-mark:after {
+    left: 7px;
+    top: 2px;
+    width: 5px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+}

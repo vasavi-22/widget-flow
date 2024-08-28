@@ -20,6 +20,9 @@ const AddCategory = ({ isVisible, onClose }) => {
     }, {})
   );
 
+  // State to manage active tab
+  const [activeTab, setActiveTab] = useState(categories[0]?.id || "");
+
   // Handle checkbox change
   const handleCheckboxChange = (categoryId, widgetId) => {
     setCheckedWidgets((prevCheckedWidgets) => ({
@@ -53,7 +56,9 @@ const AddCategory = ({ isVisible, onClose }) => {
   return (
     <Dialog
       className="add-category-dialog full-screen-dialog"
-      header={<div className="dialog-header">Add/Remove Widgets from Categories</div>}
+      header={
+        <div className="dialog-header">Add/Remove Widgets from Categories</div>
+      }
       visible={isVisible}
       style={{ width: "35vw", position: "absolute", right: "0" }}
       onHide={onClose}
@@ -75,29 +80,50 @@ const AddCategory = ({ isVisible, onClose }) => {
         </div>
       }
     >
-      <form>
-        {categories.map((category) => (
-          <div key={category.id}>
-            <h3>{category.name}</h3>
-            <ul>
-              {category.widgets.map((widget) => (
-                <li key={widget.id}>
-                  <label>
-                    <input
-                      type="checkbox"
-                      checked={checkedWidgets[category.id][widget.id]}
-                      onChange={() =>
-                        handleCheckboxChange(category.id, widget.id)
-                      }
-                    />
-                    {widget.name}
-                  </label>
-                </li>
-              ))}
-            </ul>
-          </div>
-        ))}
-      </form>
+      <div className="tab-container">
+        <p>Personalize your dashboard by adding the following widget</p>
+        <div className="tab-buttons">
+          {categories.map((category) => (
+            <button
+              key={category.id}
+              className={`tab-button ${
+                activeTab === category.id ? "active" : ""
+              }`}
+              onClick={() => setActiveTab(category.id)}
+            >
+              {category.name}
+            </button>
+          ))}
+        </div>
+        <div className="tab-content">
+          {categories.map(
+            (category) =>
+              activeTab === category.id && (
+                <div key={category.id}>
+                  <form>
+                    <ul>
+                      {category.widgets.map((widget) => (
+                        <li key={widget.id}>
+                          <label className="custom-checkbox">
+                            <input
+                              type="checkbox"
+                              checked={checkedWidgets[category.id][widget.id]}
+                              onChange={() =>
+                                handleCheckboxChange(category.id, widget.id)
+                              }
+                            />
+                            <span className="checkbox-mark"></span>
+                            {widget.name}
+                          </label>
+                        </li>
+                      ))}
+                    </ul>
+                  </form>
+                </div>
+              )
+          )}
+        </div>
+      </div>
     </Dialog>
   );
 };

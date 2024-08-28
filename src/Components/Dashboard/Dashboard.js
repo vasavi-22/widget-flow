@@ -95,11 +95,6 @@ const Dashboard = () => {
                         height="100px"
                       />
                       <p>No graph data available</p>
-                      <button
-                        onClick={() => handleRemoveWidget(cat.id, widget.id)}
-                      >
-                        Remove
-                      </button>
                     </div>
                   )}
                 </div>
